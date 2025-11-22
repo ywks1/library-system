@@ -1,0 +1,22 @@
+CREATE TABLE `borrow_record` (
+  `record_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '记录ID',
+  `user_id` bigint(20) NOT NULL COMMENT '用户ID',
+  `book_id` bigint(20) NOT NULL COMMENT '图书ID',
+  `borrow_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '借阅日期',
+  `due_date` datetime NOT NULL COMMENT '应还日期',
+  `return_date` datetime COMMENT '实际归还日期',
+  `renew_count` int(11) DEFAULT 0 COMMENT '续借次数',
+  `status` varchar(20) DEFAULT 'BORROWED' COMMENT '状态',
+  `overdue_days` int(11) DEFAULT 0 COMMENT '逾期天数',
+  `fine_amount` decimal(10,2) DEFAULT 0.00 COMMENT '罚款金额',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`record_id`),
+  KEY `idx_user_id` (`user_id`),
+  KEY `idx_book_id` (`book_id`),
+  KEY `idx_status` (`status`),
+  KEY `idx_due_date` (`due_date`),
+  KEY `idx_borrow_date` (`borrow_date`),
+  FOREIGN KEY (`user_id`) REFERENCES `user`(`user_id`),
+  FOREIGN KEY (`book_id`) REFERENCES `book`(`book_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='借阅记录表';

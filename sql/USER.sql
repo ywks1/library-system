@@ -1,0 +1,20 @@
+CREATE TABLE `user` (
+  `user_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+  `username` varchar(50) NOT NULL UNIQUE COMMENT '用户名',
+  `password` varchar(255) NOT NULL COMMENT '密码',
+  `role` varchar(20) NOT NULL DEFAULT 'STUDENT' COMMENT '角色',
+  `email` varchar(100) COMMENT '邮箱',
+  `phone` varchar(20) COMMENT '手机号',
+  `real_name` varchar(50) COMMENT '真实姓名',
+  `student_id` varchar(20) COMMENT '学号/工号',
+  `department` varchar(100) COMMENT '院系',
+  `max_borrow_count` int(11) DEFAULT 10 COMMENT '最大借阅数量',
+  `current_borrow_count` int(11) DEFAULT 0 COMMENT '当前借阅数量',
+  `status` varchar(20) DEFAULT 'ACTIVE' COMMENT '状态',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`user_id`),
+  KEY `idx_username` (`username`),
+  KEY `idx_role` (`role`),
+  KEY `idx_department` (`department`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表';

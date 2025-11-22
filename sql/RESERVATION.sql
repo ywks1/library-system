@@ -1,0 +1,20 @@
+CREATE TABLE `reservation` (
+  `reservation_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '预约ID',
+  `user_id` bigint(20) NOT NULL COMMENT '用户ID',
+  `book_id` bigint(20) NOT NULL COMMENT '图书ID',
+  `reserve_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '预约时间',
+  `expire_date` datetime NOT NULL COMMENT '过期时间',
+  `notify_count` int(11) DEFAULT 0 COMMENT '通知次数',
+  `status` varchar(20) DEFAULT 'PENDING' COMMENT '状态',
+  `queue_position` int(11) COMMENT '排队位置',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`reservation_id`),
+  KEY `idx_user_id` (`user_id`),
+  KEY `idx_book_id` (`book_id`),
+  KEY `idx_status` (`status`),
+  KEY `idx_expire_date` (`expire_date`),
+  UNIQUE KEY `uk_user_book` (`user_id`, `book_id`, `status`),
+  FOREIGN KEY (`user_id`) REFERENCES `user`(`user_id`),
+  FOREIGN KEY (`book_id`) REFERENCES `book`(`book_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='预约记录表';

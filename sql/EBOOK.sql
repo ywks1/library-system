@@ -1,0 +1,20 @@
+CREATE TABLE `ebook` (
+  `ebook_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '电子书ID',
+  `book_id` bigint(20) NOT NULL COMMENT '关联图书ID',
+  `file_name` varchar(255) NOT NULL COMMENT '文件名',
+  `file_url` varchar(500) NOT NULL COMMENT '文件路径',
+  `file_format` varchar(10) NOT NULL COMMENT '文件格式',
+  `file_size` bigint(20) COMMENT '文件大小',
+  `online_readable` tinyint(1) DEFAULT 1 COMMENT '可在线阅读',
+  `downloadable` tinyint(1) DEFAULT 0 COMMENT '可下载',
+  `view_count` int(11) DEFAULT 0 COMMENT '浏览次数',
+  `download_count` int(11) DEFAULT 0 COMMENT '下载次数',
+  `copyright_info` varchar(500) COMMENT '版权信息',
+  `access_level` varchar(20) DEFAULT 'ALL' COMMENT '访问级别',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`ebook_id`),
+  KEY `idx_book_id` (`book_id`),
+  KEY `idx_access_level` (`access_level`),
+  FOREIGN KEY (`book_id`) REFERENCES `book`(`book_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='电子资源表';
